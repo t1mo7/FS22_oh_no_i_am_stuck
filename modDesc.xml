@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="72">
+    <author>Timo</author>
+    <version>1.0.1.0</version>
+    <title>
+        <en>Oh No I Am Stuck</en>
+        <de>Oh nein, ich stecke fest</de>
+        <nl>Oh nee, ik zit vast</nl>
+    </title>
+    <description>
+        <en><![CDATA[Stuck in the mud? Turn on Oh No I Am Stuck and your throttle drives every wheel of the combination: the tractor's differentials lock and every attached trailer or implement wheel gets drive torque too.
+
+Controls (while sitting in the vehicle, all rebindable):
+- Left Alt + W: drive assist on / off
+- Left Alt + Q: change strength (low / medium / high)
+
+The trailer wheels only get torque while you give throttle, and the assist fades out above 12 km/h, so it only helps you get going and doesn't push you at speed.]]></en>
+        <nl><![CDATA[Vastgereden in de modder? Zet Oh nee, ik zit vast aan en je gas drijft alle wielen van de combinatie aan: de sperdifferentiëlen van de trekker gaan dicht en alle wielen van aangekoppelde aanhangers en werktuigen krijgen ook aandrijving.
+
+Bediening (in het voertuig, alles aanpasbaar):
+- Linker Alt + W: aandrijfhulp aan / uit
+- Linker Alt + Q: sterkte wisselen (laag / middel / hoog)
+
+De aanhangerwielen worden alleen aangedreven terwijl je gas geeft, en de hulp neemt af boven 12 km/u.]]></nl>
+        <de><![CDATA[Festgefahren? Schalte Oh nein, ich stecke fest ein und dein Gas treibt alle Räder des Gespanns an: die Differentiale des Traktors sperren und alle Räder angehängter Anhänger und Geräte bekommen ebenfalls Antrieb.
+
+Steuerung (im Fahrzeug, alles anpassbar):
+- Linke Alt + W: Antriebshilfe an / aus
+- Linke Alt + Q: Stärke wechseln (niedrig / mittel / hoch)
+
+Die Anhängerräder werden nur angetrieben, während du Gas gibst, und die Hilfe blendet über 12 km/h aus.]]></de>
+    </description>
+    <iconFilename>icon_ohNoIAmStuck.dds</iconFilename>
+    <multiplayer supported="true" />
+
+    <extraSourceFiles>
+        <sourceFile filename="scripts/OhNoIAmStuckEvent.lua" />
+        <sourceFile filename="scripts/register.lua" />
+    </extraSourceFiles>
+
+    <specializations>
+        <specialization name="ohNoIAmStuck" className="OhNoIAmStuck" filename="scripts/OhNoIAmStuck.lua" />
+    </specializations>
+
+    <actions>
+        <action name="OHNOIAMSTUCK_TOGGLE" category="VEHICLE" />
+        <action name="OHNOIAMSTUCK_STRENGTH" category="VEHICLE" />
+    </actions>
+
+    <inputBinding>
+        <actionBinding action="OHNOIAMSTUCK_TOGGLE">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_w" />
+        </actionBinding>
+        <actionBinding action="OHNOIAMSTUCK_STRENGTH">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_q" />
+        </actionBinding>
+    </inputBinding>
+
+    <l10n>
+        <text name="input_OHNOIAMSTUCK_TOGGLE"><en>Oh no I am stuck: all-wheel drive on / off</en><nl>Oh nee, ik zit vast: aandrijving alle wielen aan / uit</nl><de>Oh nein, ich stecke fest: Allradantrieb an / aus</de></text>
+        <text name="input_OHNOIAMSTUCK_STRENGTH"><en>Oh no I am stuck: strength</en><nl>Oh nee, ik zit vast: sterkte</nl><de>Oh nein, ich stecke fest: Stärke</de></text>
+
+        <text name="ohNoIAmStuck_enable"><en>Enable all-wheel drive assist (%s)</en><nl>Aandrijfhulp alle wielen aan (%s)</nl><de>Allrad-Antriebshilfe an (%s)</de></text>
+        <text name="ohNoIAmStuck_disable"><en>Disable all-wheel drive assist (%s)</en><nl>Aandrijfhulp alle wielen uit (%s)</nl><de>Allrad-Antriebshilfe aus (%s)</de></text>
+        <text name="ohNoIAmStuck_strength"><en>Drive assist strength: %s</en><nl>Sterkte aandrijfhulp: %s</nl><de>Stärke Antriebshilfe: %s</de></text>
+        <text name="ohNoIAmStuck_low"><en>low</en><nl>laag</nl><de>niedrig</de></text>
+        <text name="ohNoIAmStuck_medium"><en>medium</en><nl>middel</nl><de>mittel</de></text>
+        <text name="ohNoIAmStuck_high"><en>high</en><nl>hoog</nl><de>hoch</de></text>
+        <text name="ohNoIAmStuck_activeInfo"><en>ALL-WHEEL DRIVE ASSIST ON (%s) - diff locks + %d driven trailer wheels</en><nl>AANDRIJFHULP ALLE WIELEN AAN (%s) - sperren dicht + %d aangedreven aanhangerwielen</nl><de>ALLRAD-ANTRIEBSHILFE AN (%s) - Sperren zu + %d angetriebene Anhängerräder</de></text>
+    </l10n>
+</modDesc>
