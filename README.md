@@ -28,6 +28,8 @@ A Farming Simulator 22 mod for when you're **stuck with a heavy trailer**. Turn 
 | Left ALT + W | Turn all-wheel drive on / off |
 | Left ALT + Q | Change strength (low / medium / high) |
 
+The key hints in the top left only show up while you hold the **left and right mouse buttons** down, so they don't clutter your screen. The keys themselves always work.
+
 You can change the keys in the game's controls menu. While it's on, a line at the top of the screen shows the strength and how many trailer wheels are being driven.
 
 ### Getting unstuck
@@ -51,7 +53,7 @@ If something doesn't work, open `Documents\My Games\FarmingSimulator2022\log.txt
 
 ## Files
 
-- `modDesc.xml`: mod description, key bindings and translations
+- `modDesc.xml`: mod description, key bindings and texts
 - `scripts/register.lua`: adds the mod to every drivable vehicle
 - `scripts/OhNoIAmStuck.lua`: diff locks, trailer wheel torque, keys and on-screen text
 - `scripts/OhNoIAmStuckEvent.lua`: multiplayer event

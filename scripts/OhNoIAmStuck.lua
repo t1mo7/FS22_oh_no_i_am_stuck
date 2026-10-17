@@ -27,6 +27,31 @@ OhNoIAmStuck.GRAVITY = 9.81
 -- wheel -> torque we currently apply (server only); used to re-apply it when the game rewrites the wheel's physics props
 OhNoIAmStuck.wheelTorques = {}
 
+-- The key hints are only shown while the left and right mouse buttons are both held down.
+OhNoIAmStuck.MOUSE_BUTTON_LEFT = Input ~= nil and Input.MOUSE_BUTTON_LEFT or 1
+OhNoIAmStuck.MOUSE_BUTTON_RIGHT = Input ~= nil and Input.MOUSE_BUTTON_RIGHT or 3
+OhNoIAmStuck.mouseButtonsDown = {}
+
+local mouseListener = {}
+function mouseListener:mouseEvent(posX, posY, isDown, isUp, button)
+    if isDown then
+        OhNoIAmStuck.mouseButtonsDown[button] = true
+    elseif isUp then
+        OhNoIAmStuck.mouseButtonsDown[button] = nil
+    end
+end
+addModEventListener(mouseListener)
+
+function OhNoIAmStuck.getBothMouseButtonsHeld()
+    if g_gui ~= nil and g_gui:getIsGuiVisible() then
+        -- a menu swallows the mouse-up events, start fresh when it closes
+        OhNoIAmStuck.mouseButtonsDown = {}
+        return false
+    end
+    return OhNoIAmStuck.mouseButtonsDown[OhNoIAmStuck.MOUSE_BUTTON_LEFT] == true
+        and OhNoIAmStuck.mouseButtonsDown[OhNoIAmStuck.MOUSE_BUTTON_RIGHT] == true
+end
+
 function OhNoIAmStuck.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Drivable, specializations)
         and SpecializationUtil.hasSpecialization(Motorized, specializations)
@@ -259,11 +284,13 @@ end
 
 function OhNoIAmStuck:onUpdate(dt, isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
     local spec = self[OhNoIAmStuck.SPEC_TABLE_NAME]
-    if not spec.isActive then
-        return
+    local isEntered = self.getIsEntered ~= nil and self:getIsEntered()
+
+    if isEntered and self.isClient then
+        OhNoIAmStuck.updateActionEventVisibility(self, OhNoIAmStuck.getBothMouseButtonsHeld())
     end
 
-    if self.getIsEntered ~= nil and self:getIsEntered() then
+    if spec.isActive and isEntered then
         local strength = g_i18n:getText(OhNoIAmStuck.STRENGTHS[spec.strengthIndex].textKey)
         local numWheels = #self:getOhNoIAmStuckWheels()
         g_currentMission:addExtraPrintText(string.format(g_i18n:getText("ohNoIAmStuck_activeInfo"), strength, numWheels))
@@ -369,6 +396,20 @@ function OhNoIAmStuck:onRegisterActionEvents(isActiveForInput, isActiveForInputI
         spec.strengthActionEventId = strengthId
 
         OhNoIAmStuck.updateActionEventTexts(self)
+        spec.actionEventsVisible = nil
+        OhNoIAmStuck.updateActionEventVisibility(self, OhNoIAmStuck.getBothMouseButtonsHeld())
+    end
+end
+
+function OhNoIAmStuck:updateActionEventVisibility(visible)
+    local spec = self[OhNoIAmStuck.SPEC_TABLE_NAME]
+    if spec.actionEventsVisible == visible then
+        return
+    end
+    spec.actionEventsVisible = visible
+
+    for _, actionEventId in ipairs({ spec.toggleActionEventId, spec.strengthActionEventId }) do
+        g_inputBinding:setActionEventTextVisibility(actionEventId, visible)
     end
 end
 
